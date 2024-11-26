@@ -18,3 +18,4 @@ export 'src/upgrade_state.dart';
 export 'src/upgrade_store_controller.dart';
 export 'src/upgrader.dart';
 export 'src/upgrader_version_info.dart';
+export 'src/upgrader_release_notes_bottom_sheet.dart';
