@@ -21,7 +21,14 @@ class UpgraderReleaseNotesBottomSheet {
   }) async {
     print('upgrader: _showBottomSheet');
 
+    final Locale locale = Localizations.localeOf(context);
+    print('upgrader: locale: $locale');
+    print('upgrader: countryCode: ${locale.countryCode}');
+    print('upgrader: languageCode: ${locale.languageCode}');
+
     Upgrader upgrader = Upgrader();
+    // TODO: locale.countryCode and locale.languageCode should be used:
+    // Upgrader upgrader = Upgrader(countryCode: locale.countryCode, languageCode: locale.languageCode);
 
     await upgrader.initialize();
 
@@ -50,7 +57,8 @@ class UpgraderReleaseNotesBottomSheet {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        UpgraderMessages().newInThisVersion,
+                        // TODO: locale.languageCode should be used: Current issue is that this does not change when the language is changed.
+                        UpgraderMessages(code: 'da').newInThisVersion,
                         style: bottomSheetTitleTextStyle ??
                             const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
@@ -66,7 +74,8 @@ class UpgraderReleaseNotesBottomSheet {
                       style: bottomSheetReleaseNotesTextStyle ??
                           const TextStyle(fontSize: 14),
                       releaseNotes ??
-                          UpgraderMessages().noAvailableReleaseNotes,
+                          // TODO: locale.languageCode should be used:
+                          UpgraderMessages(code: 'da').noAvailableReleaseNotes,
                     ),
                   ),
                 ),
