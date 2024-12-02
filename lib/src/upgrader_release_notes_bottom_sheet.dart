@@ -4,6 +4,7 @@ import 'package:upgrader/upgrader.dart';
 class UpgraderReleaseNotesBottomSheet {
   const UpgraderReleaseNotesBottomSheet({
     BuildContext? context,
+    String? languageCode,
     Color? backgroundColor,
     double bottomSheetMaxHeightFactor = 0.6,
     Color? bottomSheetBackgroundColor,
@@ -13,22 +14,14 @@ class UpgraderReleaseNotesBottomSheet {
 
   static void showBottomSheet({
     required BuildContext context,
+    required String languageCode,
     Color? backgroundColor,
     double bottomSheetMaxHeightFactor = 0.6,
     Color? bottomSheetBackgroundColor,
     TextStyle? bottomSheetTitleTextStyle,
     TextStyle? bottomSheetReleaseNotesTextStyle,
   }) async {
-    print('upgrader: _showBottomSheet');
-
-    final Locale locale = Localizations.localeOf(context);
-    print('upgrader: locale: $locale');
-    print('upgrader: countryCode: ${locale.countryCode}');
-    print('upgrader: languageCode: ${locale.languageCode}');
-
-    Upgrader upgrader = Upgrader();
-    // TODO: locale.countryCode and locale.languageCode should be used:
-    // Upgrader upgrader = Upgrader(countryCode: locale.countryCode, languageCode: locale.languageCode);
+    Upgrader upgrader = Upgrader(languageCode: languageCode);
 
     await upgrader.initialize();
 
@@ -57,8 +50,7 @@ class UpgraderReleaseNotesBottomSheet {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        // TODO: locale.languageCode should be used: Current issue is that this does not change when the language is changed.
-                        UpgraderMessages(code: 'da').newInThisVersion,
+                        UpgraderMessages(code: languageCode).newInThisVersion,
                         style: bottomSheetTitleTextStyle ??
                             const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
@@ -74,8 +66,8 @@ class UpgraderReleaseNotesBottomSheet {
                       style: bottomSheetReleaseNotesTextStyle ??
                           const TextStyle(fontSize: 14),
                       releaseNotes ??
-                          // TODO: locale.languageCode should be used:
-                          UpgraderMessages(code: 'da').noAvailableReleaseNotes,
+                          UpgraderMessages(code: languageCode)
+                              .noAvailableReleaseNotes,
                     ),
                   ),
                 ),
