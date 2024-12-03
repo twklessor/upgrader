@@ -41,11 +41,17 @@ class UpgraderReleaseNotesBottomSheet {
               });
             }
 
-            return loading
-                ? const SizedBox(
+            return AnimatedContainer(
+              margin: const EdgeInsets.all(20),
+              duration: const Duration(milliseconds: 400),
+              child: AnimatedCrossFade(
+                  firstChild: const SizedBox(
                     height: 200,
-                    child: Center(child: CircularProgressIndicator()))
-                : ConstrainedBox(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                  secondChild: ConstrainedBox(
                     constraints: BoxConstraints(
                         maxHeight: MediaQuery.of(context).size.height *
                             bottomSheetMaxHeightFactor),
@@ -85,7 +91,12 @@ class UpgraderReleaseNotesBottomSheet {
                         ),
                       ],
                     ),
-                  );
+                  ),
+                  crossFadeState: loading
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                  duration: const Duration(milliseconds: 500)),
+            );
           });
         },
       );
